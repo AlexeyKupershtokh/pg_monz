@@ -3279,7 +3279,7 @@
     </triggers>
     <graphs>
         <graph>
-            <name>Buffer activity</name>
+            <name>Postgresql buffer activity</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
@@ -3371,7 +3371,7 @@
             </graph_items>
         </graph>
         <graph>
-            <name>Checkpoint count</name>
+            <name>Postgresql checkpoint count</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
@@ -3415,7 +3415,7 @@
             </graph_items>
         </graph>
         <graph>
-            <name>Connection count</name>
+            <name>Postgresql connection count</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
@@ -3495,7 +3495,7 @@
             </graph_items>
         </graph>
         <graph>
-            <name>Number of commited/rolled back transactions</name>
+            <name>Postgresql number of commited/rolled back transactions</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
