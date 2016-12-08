@@ -23,13 +23,13 @@ case "$APP_NAME" in
 						union all \
 						select '\"$HOST_NAME\"', 'psql.tx_rolledback', $TIMESTAMP_QUERY, (select sum(xact_rollback) from pg_stat_database) \
 						union all \
-						select '\"$HOST_NAME\"', 'psql.active_connections', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where state = 'active') \
+						select '\"$HOST_NAME\"', 'psql.active_connections', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where current_query != '<IDLE>') \
 						union all \
 						select '\"$HOST_NAME\"', 'psql.server_connections', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity) \
 						union all \
-						select '\"$HOST_NAME\"', 'psql.idle_connections', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where state = 'idle') \
+						select '\"$HOST_NAME\"', 'psql.idle_connections', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where current_query = '<IDLE>') \
 						union all \
-						select '\"$HOST_NAME\"', 'psql.idle_tx_connections', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where state = 'idle in transaction') \
+						select '\"$HOST_NAME\"', 'psql.idle_tx_connections', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where current_query = '<IDLE>' and xact_start is not null) \
 						union all \
 						select '\"$HOST_NAME\"', 'psql.locks_waiting', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where waiting = 'true') \
 						union all \
@@ -57,11 +57,11 @@ case "$APP_NAME" in
 		;;
 	pg.slow_query)
 		sending_data=$(psql -A --field-separator=' ' -t -h $PGHOST -p $PGPORT -U $PGROLE $PGDATABASE -c \
-						"select '\"$HOST_NAME\"', 'psql.slow_dml_queries', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where state = 'active' and now() - query_start > '$PARAM1 sec'::interval and query ~* '^(insert|update|delete)') \
+						"select '\"$HOST_NAME\"', 'psql.slow_dml_queries', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where current_query != '<IDLE>' and now() - query_start > '$PARAM1 sec'::interval and current_query ~* '^(insert|update|delete)') \
 						union all \
-						select '\"$HOST_NAME\"', 'psql.slow_queries', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where state = 'active' and now() - query_start > '$PARAM1 sec'::interval) \
+						select '\"$HOST_NAME\"', 'psql.slow_queries', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where current_query != '<IDLE>' and now() - query_start > '$PARAM1 sec'::interval) \
 						union all \
-						select '\"$HOST_NAME\"', 'psql.slow_select_queries', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where state = 'active' and now() - query_start > '$PARAM1 sec'::interval and query ilike 'select%')" 2>&1
+						select '\"$HOST_NAME\"', 'psql.slow_select_queries', $TIMESTAMP_QUERY, (select count(*) from pg_stat_activity where current_query != '<IDLE>' and now() - query_start > '$PARAM1 sec'::interval and current_query ilike 'select%')" 2>&1
 					)
 		;;
 	*)
