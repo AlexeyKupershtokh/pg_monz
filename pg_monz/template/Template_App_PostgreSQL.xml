@@ -515,12 +515,12 @@
                     <valuemap/>
                 </item>
                 <item>
-                    <name>Log of $1</name>
+                    <name>Log of 1</name>
                     <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>logrt[&quot;{$PGLOGDIR}/postgresql-.*\.log&quot;,&quot;PANIC|FATAL|ERROR|[Ee]rror&quot;]</key>
+                    <key>logrt[&quot;{$PGLOGDIR}/postgresql-.*\.log$&quot;,&quot;PANIC|FATAL|ERROR|[Ee]rror&quot;]</key>
                     <delay>1</delay>
                     <history>90</history>
                     <trends>365</trends>
