@@ -3186,7 +3186,7 @@
                             <dynamic>0</dynamic>
                             <sort_triggers>0</sort_triggers>
                             <resource>
-                                <name>Checkpoint count</name>
+                                <name>Postgresql checkpoint count</name>
                                 <host>Template App PostgreSQL</host>
                             </resource>
                         </screen_item>
@@ -3206,7 +3206,7 @@
                             <dynamic>0</dynamic>
                             <sort_triggers>0</sort_triggers>
                             <resource>
-                                <name>Connection count</name>
+                                <name>Postgresql connection count</name>
                                 <host>Template App PostgreSQL</host>
                             </resource>
                         </screen_item>
